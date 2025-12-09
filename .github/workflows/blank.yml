@@ -1,9 +1,9 @@
-name: 📊 Actualizar Estadísticas y Gráficos
+name: 👾 Generar Gráfico Pac-Man de Contribuciones
 
 on:
-  # Ejecuta diariamente a la medianoche UTC
+  # Ejecuta el workflow cada 12 horas (o a la hora que prefieras)
   schedule:
-    - cron: '0 0 * * *' 
+    - cron: '0 */12 * * *' 
   # Permite ejecutarlo manualmente
   workflow_dispatch:
 
@@ -42,6 +42,9 @@ jobs:
 
       - name: Push changes
         uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: main
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: main
