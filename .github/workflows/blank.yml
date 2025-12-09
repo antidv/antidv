@@ -1,4 +1,4 @@
-name: 👾 Generar Gráfico Pac-Man de Contribuciones
+name: CI
 
 on:
   schedule:
@@ -35,7 +35,7 @@ jobs:
             echo "::set-output name=pushed::false"
             echo "No hay cambios en el SVG para commitear. Saltando commit."
           else
-            git commit -m "🤖 Actualiza el gráfico de contribuciones"
+            git commit -m "Actualiza el gráfico de contribuciones"
             echo "::set-output name=pushed::true"
           fi
 
