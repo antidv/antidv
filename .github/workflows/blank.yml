@@ -13,16 +13,9 @@ jobs:
     steps:
       # 1. Checkout (Descargar el repositorio)
       - uses: actions/checkout@v4
-
-      # 2. Generar el gráfico de estadísticas (Si quieres más gráficos en el futuro)
-      # NOTA: Esta acción genera tus stats en un archivo SVG si la configuras
       - name: Generar SVG de Contribuciones (Opcional, si no quieres Pac-Man)
-        # Aquí podrías usar una acción para generar un SVG de contribuciones
-        # Si quieres el efecto visual, la mejor opción es encontrar una acción de "snake" o similar
-
-      # 3. La Acción de Pac-Man (versión alternativa)
       - name: 👾 Generar Gráfico Pac-Man de Contribuciones (Alternativa)
-        uses: ifg/pacman-contribution-graph-action@v1 # Esta es una versión más actual y funcional
+        uses: ifg/pacman-contribution-graph-action@v1 
         with:
           # Es necesario el token
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -42,9 +35,6 @@ jobs:
 
       - name: Push changes
         uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: main
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: main
