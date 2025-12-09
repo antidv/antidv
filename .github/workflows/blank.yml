@@ -1,10 +1,8 @@
 name: 👾 Generar Gráfico Pac-Man de Contribuciones
 
 on:
-  # Ejecuta el workflow cada 12 horas (o a la hora que prefieras)
   schedule:
     - cron: '0 */12 * * *' 
-  # Permite ejecutarlo manualmente
   workflow_dispatch:
 
 jobs:
@@ -13,27 +11,37 @@ jobs:
     steps:
       # 1. Checkout (Descargar el repositorio)
       - uses: actions/checkout@v4
-      - name: Generar SVG de Contribuciones (Opcional, si no quieres Pac-Man)
-      - name: 👾 Generar Gráfico Pac-Man de Contribuciones (Alternativa)
+      - name: 👾 Generar Gráfico Pac-Man de Contribuciones
         uses: ifg/pacman-contribution-graph-action@v1 
         with:
-          # Es necesario el token
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          # Configura la ruta de salida
           svg_path: output/pacman-contribution-graph.svg
           svg_dark_path: output/pacman-contribution-graph-dark.svg
-          # Asegúrate de que tu usuario sea correcto
           username: antidv 
 
-      # 4. Commit y push (Subir el nuevo archivo SVG generado)
+      # 4. Commit (Mejorado para manejar la ausencia de cambios)
+      # Nota: Usamos 'git diff-index' para comprobar si hay archivos nuevos/modificados antes de intentar el commit.
       - name: Commit files
+        id: commit
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add output/pacman-contribution-graph.svg output/pacman-contribution-graph-dark.svg || echo "No hay archivos Pac-Man para agregar"
-          git commit -m "🤖 Actualiza el gráfico de contribuciones" || echo "No hay cambios para subir"
+          
+          # Añade los archivos generados
+          git add output/pacman-contribution-graph.svg output/pacman-contribution-graph-dark.svg
 
+          # Verifica si hay cambios para commitear
+          if git diff-index --quiet HEAD; then
+            echo "::set-output name=pushed::false"
+            echo "No hay cambios en el SVG para commitear. Saltando commit."
+          else
+            git commit -m "🤖 Actualiza el gráfico de contribuciones"
+            echo "::set-output name=pushed::true"
+          fi
+
+      # 5. Push (Solo si hubo un commit en el paso anterior)
       - name: Push changes
+        if: steps.commit.outputs.pushed == 'true'
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
