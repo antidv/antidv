@@ -1,9 +1,9 @@
-name: 👾 Generar Gráfico Pac-Man de Contribuciones
+name: 📊 Actualizar Estadísticas y Gráficos
 
 on:
-  # Ejecuta el workflow cada 12 horas (o a la hora que prefieras)
+  # Ejecuta diariamente a la medianoche UTC
   schedule:
-    - cron: '0 */12 * * *' 
+    - cron: '0 0 * * *' 
   # Permite ejecutarlo manualmente
   workflow_dispatch:
 
@@ -14,25 +14,32 @@ jobs:
       # 1. Checkout (Descargar el repositorio)
       - uses: actions/checkout@v4
 
-      # 2. Generar el gráfico Pac-Man
-      - uses: antvelasquez/Pac-Man-Game-Action@v1
+      # 2. Generar el gráfico de estadísticas (Si quieres más gráficos en el futuro)
+      # NOTA: Esta acción genera tus stats en un archivo SVG si la configuras
+      - name: Generar SVG de Contribuciones (Opcional, si no quieres Pac-Man)
+        # Aquí podrías usar una acción para generar un SVG de contribuciones
+        # Si quieres el efecto visual, la mejor opción es encontrar una acción de "snake" o similar
+
+      # 3. La Acción de Pac-Man (versión alternativa)
+      - name: 👾 Generar Gráfico Pac-Man de Contribuciones (Alternativa)
+        uses: ifg/pacman-contribution-graph-action@v1 # Esta es una versión más actual y funcional
         with:
-          # Es necesario el token para que la acción pueda acceder a tus contribuciones
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # Configura la ruta de salida, debe coincidir con la URL en tu README
-          OUTPUT_PATH: output/pacman-contribution-graph.svg
-          # Configura la ruta para el tema oscuro
-          OUTPUT_DARK_PATH: output/pacman-contribution-graph-dark.svg
-          # Puedes personalizar más opciones aquí si lo deseas (color, etc.)
-      
-      # 3. Commit y push (Subir el nuevo archivo SVG generado)
+          # Es necesario el token
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          # Configura la ruta de salida
+          svg_path: output/pacman-contribution-graph.svg
+          svg_dark_path: output/pacman-contribution-graph-dark.svg
+          # Asegúrate de que tu usuario sea correcto
+          username: antidv 
+
+      # 4. Commit y push (Subir el nuevo archivo SVG generado)
       - name: Commit files
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add output/pacman-contribution-graph.svg output/pacman-contribution-graph-dark.svg
-          git commit -m "🤖 Actualiza el gráfico de contribuciones Pac-Man" || echo "No hay cambios para subir"
-      
+          git add output/pacman-contribution-graph.svg output/pacman-contribution-graph-dark.svg || echo "No hay archivos Pac-Man para agregar"
+          git commit -m "🤖 Actualiza el gráfico de contribuciones" || echo "No hay cambios para subir"
+
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
