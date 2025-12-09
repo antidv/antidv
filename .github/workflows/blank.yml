@@ -12,12 +12,12 @@ jobs:
       # 1. Checkout (Descargar el repositorio)
       - uses: actions/checkout@v4
       - name: 👾 Generar Gráfico Pac-Man de Contribuciones
-        uses: ifg/pacman-contribution-graph-action@v1 
+        uses: antvelasquez/pacman-contribution-graph-action@main
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           svg_path: output/pacman-contribution-graph.svg
           svg_dark_path: output/pacman-contribution-graph-dark.svg
-          username: antidv 
+          username: antidv
 
       # 4. Commit (Mejorado para manejar la ausencia de cambios)
       # Nota: Usamos 'git diff-index' para comprobar si hay archivos nuevos/modificados antes de intentar el commit.
