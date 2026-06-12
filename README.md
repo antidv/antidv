@@ -28,7 +28,7 @@
 
 <br clear="both">
 
-<p align="left">- 🌴 Backend Developer, Database Manager & Junior IT Specialist.<br>-  💻 Currently working as Technical Support.<br>- 📽️ Also have a YT Channel: @Mega_Trailers</p>
+<p align="left">- 🌴 Fullstacker, Database Manager & Junior IT Specialist.<br>-  💻 Currently working as Software Developer in Sunass.<br>- 📽️ Also have a YT Channel: @Mega_Trailers</p>
 
 ###
 
