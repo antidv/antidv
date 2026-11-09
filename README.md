@@ -28,7 +28,7 @@
 
 <!-- Pac-Man forzado en modo oscuro (Negro) -->
 <div align="center">
-  <img alt="pacman contribution graph" src="https://raw.githubusercontent.com/antidv/antidv/output/pacman-contribution-graph-dark.svg" width="100%" />
+  <img alt="pacman contribution graph" src="https://raw.githubusercontent.com/antidv/antidv/output/pacman-contribution-graph-dark.svg?v=2" width="100%" />
 </div>
 
 <h3 align="left">🖥️ Languages & Skills</h3>
